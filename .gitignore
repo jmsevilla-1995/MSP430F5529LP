@@ -1,6 +1,9 @@
 
-*.obj
+targetConfigs/readme.txt
+targetConfigs/MSP430F5529.ccxml
+lnk_msp430f5529.cmd
+.settings/org.eclipse.cdt.debug.core.prefs
+.settings/org.eclipse.cdt.codan.core.prefs
+.project
 .cproject
 .ccsproject
-*.launch
-.project
