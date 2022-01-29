@@ -17,10 +17,9 @@ void main(void)
 {
     char msg[] = "Enviar mensaje!";
     char msg_resaltar[] = "#####################";
-    char mensaje[] = "H";
-    int estado = 0;
-    int presionando = 1;
-    int presionando_ant = 1;
+    int enviar = 0;
+    int presionando_enviar = 1;
+    int presionando_enviar = 1;
 
     conf_watchdog();
 
@@ -42,8 +41,10 @@ void main(void)
     UCA0CTL1 &= ~UCSWRST;                     // **Initialize USCI state machine**
     UCA0IE |= UCRXIE;                         // Enable USCI_A0 RX interrupt
 
-    P1DIR = P1DIR | BIT0;
+    P1DIR = P1DIR & ~ BIT0;
     P1SEL = P1SEL & ~BIT0;
+
+    P1REN = P1REN | BIT1;
 
     P2DIR = P2DIR & ~BIT1;
     P2SEL = P2SEL & ~BIT1;
@@ -54,24 +55,22 @@ void main(void)
     while(1)
     {
         if (P2IN & BIT1)
-            presionando = 1;
+            presionando_enviar = 1;
         else
         {
-            presionando = 0;
+            presionando_enviar = 0;
         }
-        if (presionando != presionando_ant & presionando == 1 & estado == 0)
+        if (presionando_enviar != presionando_enviar_ant & presionando_enviar == 1 & enviar == 0)
         {
-            estado = 1;
+            enviar = 1;
         }
-        presionando_ant = presionando;
-        if (estado == 1)
+        presionando_enviar_ant = presionando_enviar;
+        if (enviar == 1)
         {
-            estado = 0;
+            enviar = 0;
             P1OUT |= BIT0;
             enviar_mensaje(msg_resaltar);
             enviar_mensaje(msg);
-            enviar_mensaje(msg_resaltar);
-            enviar_mensaje(mensaje);
             enviar_mensaje(msg_resaltar);
         }
         else
