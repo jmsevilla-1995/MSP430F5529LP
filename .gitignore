@@ -7,3 +7,14 @@ lnk_msp430f5529.cmd
 .project
 .cproject
 .ccsproject
+*.d
+*.xml
+*.prefs
+*.opt
+*.mk
+Matlab/Predictor-Prealimentador-Perturbador.txt
+Matlab/PredictorConPerturbacionYPrealimentacion.m
+Debug/makefile
+*.obj
+*.out
+*.launch
