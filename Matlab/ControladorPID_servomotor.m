@@ -89,7 +89,7 @@ if length(numCz)<4
     denCz(4)=0;
 end
 %% Codigo para probar controladores 
-Ref=0.002;
+Ref=60;
 R=Ref*H;
 x(:,1)=[0;0;0];
 uk_1=0;
@@ -115,6 +115,11 @@ error=100*(R-(y(length(y))))/R
 i=i+1;
 figure(i)
 plot(tiempo,y/H)
+grid
+i=i+1;
+figure(i)
+plot(tiempo,e)
+grid
 a_1=denCz(2);
 a_2=denCz(3);
 a_3=denCz(4);
@@ -122,3 +127,17 @@ b_1=numCz(1);
 b_2=numCz(2);
 b_3=numCz(3);
 b_4=numCz(4);
+%% Codigo C
+FlotadorEEPrealEst_r=fopen('Variables PID.txt','wt');
+fprintf(FlotadorEEPrealEst_r, 'float a_1 = %15.15e ; \n\n',a_1);
+
+fprintf(FlotadorEEPrealEst_r, 'float a_2 = %15.15e ; \n\n',a_2);
+
+fprintf(FlotadorEEPrealEst_r, 'float a_3 = %15.15e  ; \n',a_3);
+fprintf(FlotadorEEPrealEst_r, 'float b_1 = %15.15e  ; \n',b_1);
+fprintf(FlotadorEEPrealEst_r, 'float b_2 = %15.15e  ; \n\n',b_2);
+
+fprintf(FlotadorEEPrealEst_r, 'float b_3 = %15.15e  ; \n',b_3);
+fprintf(FlotadorEEPrealEst_r, 'float b_4 = %15.15e  ; \n',b_4);
+
+fclose(FlotadorEEPrealEst_r);
