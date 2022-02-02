@@ -6,12 +6,14 @@ R=2.79;
 L=0.005;
 Ke=0.0731;
 Kp=0.0729;
-J=1000;
+J=0.001;
 f=0;
 Vcc=5;
+Ref_grados=60;
+Ref = Ref_grados*2*pi/360;
 %% Especificaciones 
-tiempoSimulacion=2;
-tr=0.5;
+tiempoSimulacion=5;
+tr=1;
 SO=0.05;
 chi=cos(atan(-pi/log(SO)));
 wn=pi/(chi*tr);
@@ -89,7 +91,6 @@ if length(numCz)<4
     denCz(4)=0;
 end
 %% Codigo para probar controladores 
-Ref=60;
 R=Ref*H;
 x(:,1)=[0;0;0];
 uk_1=0;
@@ -101,6 +102,9 @@ ek_3=0;
 for k=1:tiempoSimulacion/T
     e(k)=(R-C*x(:,k));
     u(k)=denCz(2)*uk_1+denCz(3)*uk_2+denCz(4)*uk_3+numCz(1)*e(k)+numCz(2)*ek_1+numCz(3)*ek_2+numCz(4)*ek_3;
+    if u(k) > 0.9*Vcc
+        u(k) = 0.9*Vcc;
+    end
     uk_3=uk_2;
     uk_2=uk_1;
     uk_1=u(k);
@@ -119,6 +123,10 @@ grid
 i=i+1;
 figure(i)
 plot(tiempo,e)
+grid
+i=i+1;
+figure(i)
+plot(tiempo,u)
 grid
 a_1=denCz(2);
 a_2=denCz(3);
