@@ -22,3 +22,4 @@ Matlab/Variables PID.txt
 Matlab/ControladorPID.m
 *.jpg
 Matlab/PredictorConPerturbacionYPrealimentacion_servomotor.m
+/Debug/
